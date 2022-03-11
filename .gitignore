@@ -1,0 +1,17 @@
+# Source files
+!lnk_msp430g2553.cmd
+
+# Code Composer Studio output
+.launches
+.settings
+Debug/
+
+# Vi/Vim files
+*.swp
+
+# ctags files
+tags
+
+#CppCheck files
+*.ctu-info
+cppcheck-addon-ctu-file-list
