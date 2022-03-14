@@ -11,4 +11,7 @@ Master and Slave Driver for MSP430g2553
               |                 |        
               |                 |       
               |         SDA/P1.7|------->
-              |         SCL/P1.6|------->
+              |         SCL/P1.6|------->  
+# Dependencies  
+-TI_USCI_I2C_master.c  
+-TI_USCI_I2C_master.h  
