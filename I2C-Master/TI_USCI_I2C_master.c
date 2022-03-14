@@ -1,4 +1,16 @@
 //******************************************************************************
+//
+// ------------------------> ******** MODIFIED ******** <------------------------
+//
+//
+//      ---------->  Bruno Benedetti - brunobenedetti45@gmail.com  <----------
+//
+//            ---------->  Modified to use on MSP430g2553  <----------
+//
+//
+// ------------------------> ******** MODIFIED ******** <------------------------
+//
+//
 //   MSP430 USCI I2C Transmitter and Receiver
 //
 //  Description: This code configures the MSP430's USCI module as 
@@ -24,14 +36,10 @@
 // Texas Instruments Deutschland GmbH
 // November 2007
 // Built with IAR Embedded Workbench Version: 3.42A
+//
 //******************************************************************************
-//#include "msp430x26x.h"                        // device specific header
-//#include <msp430.h>
+
 #include <msp430g2553.h>
-//#include "msp430x22x4.h"
-//#include "msp430x23x0.h"
-//#include "msp430xG46x.h"
-// ...                                         // more devices are possible
 
 #include "TI_USCI_I2C_master.h"
 
@@ -48,11 +56,10 @@ unsigned char *TI_transmit_field;
 // IN:   unsigned char slave_address   =>  Slave Address
 //       unsigned char prescale        =>  SCL clock adjustment 
 //-----------------------------------------------------------------------------
-void TI_USCI_I2C_receiveinit(unsigned char slave_address, 
-                             unsigned char prescale){
-  //P3SEL |= SDA_PIN + SCL_PIN;                 // Assign I2C pins to USCI_B0
+void TI_USCI_I2C_receiveinit(unsigned char slave_address, unsigned char prescale)
+{
   // Connect the SDA/SCL pins to the I2C module
-  P1SEL  |= BIT7 + BIT6;
+  P1SEL  |= BIT7 + BIT6;                    // Assign I2C pins to USCI_B0
   P1SEL2 |= BIT7 + BIT6;
 
   UCB0CTL1 = UCSWRST;                        // Enable SW reset
@@ -73,13 +80,12 @@ void TI_USCI_I2C_receiveinit(unsigned char slave_address,
 // This function initializes the USCI module for master-transmit operation. 
 //
 // IN:   unsigned char slave_address   =>  Slave Address
-//       unsigned char prescale        =>  SCL clock adjustment 
+//       unsigned char prescale        =>  SCL clock adjustment  // fSCL = SMCLK/prescale
 //------------------------------------------------------------------------------
-void TI_USCI_I2C_transmitinit(unsigned char slave_address, 
-                          unsigned char prescale){
-  //P3SEL |= SDA_PIN + SCL_PIN;                 // Assign I2C pins to USCI_B0
+void TI_USCI_I2C_transmitinit(unsigned char slave_address, unsigned char prescale)
+{
   // Connect the SDA/SCL pins to the I2C module
-  P1SEL  |= BIT7 + BIT6;
+  P1SEL  |= BIT7 + BIT6;                     // Assign I2C pins to USCI_B0
   P1SEL2 |= BIT7 + BIT6;
 
   UCB0CTL1 = UCSWRST;                        // Enable SW reset
@@ -101,7 +107,8 @@ void TI_USCI_I2C_transmitinit(unsigned char slave_address,
 // IN:   unsigned char byteCount  =>  number of bytes that should be read
 //       unsigned char *field     =>  array variable used to store received data
 //------------------------------------------------------------------------------
-void TI_USCI_I2C_receive(unsigned char byteCount, unsigned char *field){
+void TI_USCI_I2C_receive(unsigned char byteCount, unsigned char *field)
+{
   TI_receive_field = field;
   if ( byteCount == 1 ){
     byteCtr = 0 ;
@@ -125,7 +132,8 @@ void TI_USCI_I2C_receive(unsigned char byteCount, unsigned char *field){
 // IN:   unsigned char byteCount  =>  number of bytes that should be transmitted
 //       unsigned char *field     =>  array variable. Its content will be sent.
 //------------------------------------------------------------------------------
-void TI_USCI_I2C_transmit(unsigned char byteCount, unsigned char *field){
+void TI_USCI_I2C_transmit(unsigned char byteCount, unsigned char *field)
+{
   TI_transmit_field = field;
   byteCtr = byteCount;
   UCB0CTL1 |= UCTR + UCTXSTT;                 // I2C TX, start condition
@@ -140,7 +148,8 @@ void TI_USCI_I2C_transmit(unsigned char byteCount, unsigned char *field){
 // OUT:  unsigned char                =>  0: address was not found, 
 //                                        1: address found
 //------------------------------------------------------------------------------
-unsigned char TI_USCI_I2C_slave_present(unsigned char slave_address){
+unsigned char TI_USCI_I2C_slave_present(unsigned char slave_address)
+{
   unsigned char ie2_bak, slaveadr_bak, ucb0i2cie, returnValue;
   ucb0i2cie = UCB0I2CIE;                      // restore old UCB0I2CIE
   ie2_bak = IE2;                              // store IE2 register
@@ -169,7 +178,8 @@ unsigned char TI_USCI_I2C_slave_present(unsigned char slave_address){
 // OUT:  unsigned char  =>  0: I2C bus is idle, 
 //                          1: communication is in progress
 //------------------------------------------------------------------------------
-unsigned char TI_USCI_I2C_notready(){
+unsigned char TI_USCI_I2C_notready()
+{
   return (UCB0STAT & UCBBUSY);
 }
 
