@@ -3,7 +3,7 @@
  *
  * \author Bruno Benedetti <brunobenedetti45@gmail.com>
  *
- * \version 2.0.0
+ * \version 2.5.0
  *
  * \date 10/03/2022
  *
@@ -18,7 +18,7 @@ int current_i2c_request = 1;                //Starts at the first request
 void main(void)
 {
 
-  i2c_request_setup();                      //Setup function
+  i2c_init();                               //Setup function
 
   while(1)
   {

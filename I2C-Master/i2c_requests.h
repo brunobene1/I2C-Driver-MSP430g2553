@@ -2,14 +2,8 @@
 #define I2C_REQUESTS_H
 
 #include <msp430g2553.h>
-#include "TI_USCI_I2C_master.h"
+#include "msp430g2xx3_uscib0_i2c_08.h"
 #include "crc8.h"
-
-
-/**
- * \brief Setup function
- */
-void i2c_request_setup();
 
 
 /**
