@@ -73,7 +73,7 @@
 unsigned char *PTxData;                     // Pointer to TX data
 unsigned char TXByteCtr;
 
-void i2c_init(int slave_address)
+void i2c_init()
 {
     WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
     P1SEL |= BIT6 + BIT7;                     // Assign I2C pins to USCI_B0 (P1.6 = SDA, P1.7 = SCL)
