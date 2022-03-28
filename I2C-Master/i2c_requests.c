@@ -36,7 +36,8 @@ void i2c_requests(int *current_request)
             slave_msg[i] = RxBuffer[i];
         }
 
-        crc8_check_bool = check_crc(slave_msg, 4, RxBuffer[5]); //Checks if the crc8 is correct
+        slave_crc8 = RxBuffer[5];
+        crc8_check_bool = check_crc(slave_msg, 4, slave_crc8); //Checks if the crc8 is correct
 
         break;
 
