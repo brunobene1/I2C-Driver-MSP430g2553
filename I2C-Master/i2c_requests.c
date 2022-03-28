@@ -6,8 +6,8 @@ volatile unsigned char RxBuffer[128];       // Rx buffer, allocate 128 byte of R
 unsigned int crc8_var;
 bool crc8_check_bool;
 uint8_t slave_crc8;
-//unsigned int i;
-//unsigned char slave_msg[4] = { };
+unsigned int i;
+unsigned char slave_msg[4];
 //unsigned char timercounter;
 
 void i2c_requests(int *current_request)
@@ -16,7 +16,7 @@ void i2c_requests(int *current_request)
     {
         case 1: // Example of how a request should look like
 
-        i2c_start_write_to_slave(EPS_SLAVE);         //Starts the communication with slave
+        i2c_start_write_to_slave(EPS_SLAVE);         //Starts the communication to write on the slave
 
         // ----- Master Message -----
         TxBuffer[0] = 0x30;                          //Random data
@@ -25,6 +25,19 @@ void i2c_requests(int *current_request)
 
         // ----- Sending Message -----
         i2c_write(TxBuffer, 2);                      //Sending master message
+
+        // ----- Reading Message -----
+        i2c_start_read_from_slave(EPS_SLAVE);        //Starts the communication to read from the slave
+        i2c_read(RxBuffer, 5);
+
+        // ----- crc8 -----
+        for(i =0; i < 4; i++)
+        {
+            slave_msg[i] = RxBuffer[i];
+        }
+
+        crc8_check_bool = check_crc(slave_msg, 4, RxBuffer[5]); //Checks if the crc8 is correct
+
         break;
 
         default:

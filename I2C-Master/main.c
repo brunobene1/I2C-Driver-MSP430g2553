@@ -3,7 +3,7 @@
  *
  * \author Bruno Benedetti <brunobenedetti45@gmail.com>
  *
- * \version 2.5.0
+ * \version 3.0.0
  *
  * \date 10/03/2022
  *
